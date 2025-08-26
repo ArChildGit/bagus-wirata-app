@@ -13,6 +13,12 @@ class EventController extends Controller
         return view('admin.events.index', compact('events'));
     }
 
+    public function publicIndex()
+    {
+        $events = Event::latest()->paginate(10);
+        return view('events.index', compact('events'));
+    }
+
     public function create()
     {
         return view('admin.events.create');
@@ -72,14 +78,6 @@ class EventController extends Controller
         return redirect()->route('admin.events.index')
             ->with('success', 'Event berhasil dihapus!');
     }
-
-    public function publicIndex()
-    {
-        $events = Event::latest()->paginate(10);
-
-        return view('events.index', compact('events')); // komentar dulu
-    }
-
 
     public function show(Event $event)
     {
