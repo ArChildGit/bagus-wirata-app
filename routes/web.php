@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\EventController;
@@ -31,6 +32,21 @@ Route::middleware(['auth', 'admin'])->group(function () {
 // publik / user biasa
 Route::get('/events', [EventController::class, 'publicIndex'])->name('events.index');
 Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
+
+// Galleries
+Route::middleware(['auth', 'admin'])->group(function () {
+    // Admin CRUD Gallery
+    Route::get('/admin/galleries', [GalleryController::class, 'index'])->name('admin.galleries.index');
+    Route::get('/admin/galleries/create', [GalleryController::class, 'create'])->name('admin.galleries.create');
+    Route::post('/admin/galleries', [GalleryController::class, 'store'])->name('admin.galleries.store');
+    Route::get('/admin/galleries/{gallery}/edit', [GalleryController::class, 'edit'])->name('admin.galleries.edit');
+    Route::put('/admin/galleries/{gallery}', [GalleryController::class, 'update'])->name('admin.galleries.update');
+    Route::delete('/admin/galleries/{gallery}', [GalleryController::class, 'destroy'])->name('admin.galleries.destroy');
+});
+
+// Public Gallery
+Route::get('/galleries', [GalleryController::class, 'publicIndex'])->name('galleries.index');
+Route::get('/galleries/{gallery}', [GalleryController::class, 'show'])->name('galleries.show');
 
 // komentar (hanya untuk user login)
 Route::middleware('auth')->group(function () {
