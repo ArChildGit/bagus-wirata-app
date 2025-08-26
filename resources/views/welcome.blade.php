@@ -55,7 +55,8 @@
                     <a href="#home" class="hover:text-accent transition">Home</a>
                     <a href="#about" class="hover:text-accent transition">Tentang</a>
                     <a href="#music" class="hover:text-accent transition">Musik</a>
-                    <a href="#gallery" class="hover:text-accent transition">Galeri</a>
+                    <a href="{{ route('galleries.index') }}" class="hover:text-accent transition">Galeri</a>
+                    <a href="{{ route('merches.index') }}" class="hover:text-accent transition">Merch</a>
                     <a href="#shows" class="hover:text-accent transition">Konser</a>
                     <a href="#contact" class="hover:text-accent transition">Kontak</a>
                 </nav>
@@ -72,7 +73,8 @@
                 <a href="#home" class="hover:text-accent transition">Home</a>
                 <a href="#about" class="hover:text-accent transition">Tentang</a>
                 <a href="#music" class="hover:text-accent transition">Musik</a>
-                <a href="#gallery" class="hover:text-accent transition">Galeri</a>
+                <a href="{{ route('galleries.index') }}" class="hover:text-accent transition">Galeri</a>
+                <a href="{{ route('merches.index') }}" class="hover:text-accent transition">Merch</a>
                 <a href="#shows" class="hover:text-accent transition">Konser</a>
                 <a href="#contact" class="hover:text-accent transition">Kontak</a>
             </div>

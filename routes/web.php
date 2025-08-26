@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\MerchController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\EventController;
@@ -47,6 +48,21 @@ Route::middleware(['auth', 'admin'])->group(function () {
 // Public Gallery
 Route::get('/galleries', [GalleryController::class, 'publicIndex'])->name('galleries.index');
 Route::get('/galleries/{gallery}', [GalleryController::class, 'show'])->name('galleries.show');
+
+// Admin CRUD
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/merches', [MerchController::class, 'index'])->name('admin.merches.index');
+    Route::get('/admin/merches/create', [MerchController::class, 'create'])->name('admin.merches.create');
+    Route::post('/admin/merches', [MerchController::class, 'store'])->name('admin.merches.store');
+    Route::get('/admin/merches/{merch}/edit', [MerchController::class, 'edit'])->name('admin.merches.edit');
+    Route::put('/admin/merches/{merch}', [MerchController::class, 'update'])->name('admin.merches.update');
+    Route::delete('/admin/merches/{merch}', [MerchController::class, 'destroy'])->name('admin.merches.destroy');
+});
+
+// Public
+Route::get('/merches', [MerchController::class, 'publicIndex'])->name('merches.index');
+Route::get('/merches/{merch}', [MerchController::class, 'show'])->name('merches.show');
+
 
 // komentar (hanya untuk user login)
 Route::middleware('auth')->group(function () {
