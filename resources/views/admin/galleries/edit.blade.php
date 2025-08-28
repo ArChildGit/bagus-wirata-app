@@ -1,11 +1,65 @@
-<h1>Edit Gallery</h1>
-<form action="{{ route('admin.galleries.update', $gallery->id) }}" method="POST" enctype="multipart/form-data">
-    @csrf
-    @method('PUT')
-    <input type="text" name="title" value="{{ $gallery->title }}" required><br><br>
-    <textarea name="description">{{ $gallery->description }}</textarea><br><br>
-    <input type="file" name="image"><br>
-    <img src="{{ asset('storage/'.$gallery->image_path) }}" width="150"><br><br>
-    <button type="submit">Update</button>
-</form>
-<a href="{{ route('admin.galleries.index') }}">Back</a>
+<x-admin-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Edit Gallery
+        </h2>
+    </x-slot>
+
+    <div class="py-6">
+        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+
+                @if ($errors->any())
+                    <div class="mb-3 text-red-600">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                <form action="{{ route('admin.galleries.update', $gallery->id) }}" 
+                      method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+
+                    <div class="mb-3">
+                        <label class="block font-medium">Judul Gallery</label>
+                        <input type="text" name="title" 
+                               value="{{ old('title', $gallery->title) }}" 
+                               class="border w-full px-2 py-1 rounded" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="block font-medium">Deskripsi</label>
+                        <textarea name="description" rows="4"
+                                  class="border w-full px-2 py-1 rounded">{{ old('description', $gallery->description) }}</textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="block font-medium">Gambar Gallery</label>
+                        @if($gallery->image_path)
+                            <img src="{{ asset('storage/' . $gallery->image_path) }}" 
+                                 alt="Gallery Image" width="150" class="mb-2 rounded shadow">
+                        @endif
+                        <input type="file" name="image" accept="image/*" 
+                               class="border w-full px-2 py-1 rounded">
+                    </div>
+
+                    <div class="flex items-center space-x-3">
+                        <button type="submit" 
+                                class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow">
+                            Perbarui
+                        </button>
+                        <a href="{{ route('admin.galleries.index') }}" 
+                           class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded shadow">
+                            Batal
+                        </a>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</x-admin-layout>

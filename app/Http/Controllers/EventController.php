@@ -31,14 +31,20 @@ class EventController extends Controller
             'description' => 'required',
             'date' => 'required|date',
             'location' => 'required',
+            'poster' => 'nullable|image|max:10240', // ✅ tambahkan validasi poster
         ]);
+
+        $posterPath = $request->hasFile('poster') 
+            ? $request->file('poster')->store('events/posters', 'public') 
+            : null;
 
         Event::create([
             'name' => $request->name,
             'description' => $request->description,
             'date' => $request->date,
             'location' => $request->location,
-            'user_id' => auth()->id(), // ✅ simpan id user yg login
+            'user_id' => auth()->id(),
+            'poster_path' => $posterPath, // ✅ simpan path poster
         ]);
 
         return redirect()->route('admin.events.index')
@@ -57,14 +63,20 @@ class EventController extends Controller
             'description' => 'required',
             'date' => 'required|date',
             'location' => 'required',
+            'poster' => 'nullable|image|max:10240', // ✅ validasi poster
         ]);
+
+        if ($request->hasFile('poster')) {
+            $event->poster_path = $request->file('poster')->store('events/posters', 'public');
+        }
 
         $event->update([
             'name' => $request->name,
             'description' => $request->description,
             'date' => $request->date,
             'location' => $request->location,
-            'user_id' => auth()->id(), // ✅ update user_id ke user yg login
+            'user_id' => auth()->id(),
+            'poster_path' => $event->poster_path, // ✅ update path poster jika ada
         ]);
 
         return redirect()->route('admin.events.index')

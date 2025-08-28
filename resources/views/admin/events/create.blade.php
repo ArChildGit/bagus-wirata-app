@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-admin-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             Tambah Event
@@ -8,45 +8,60 @@
     <div class="py-6">
         <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
-                <form action="{{ route('admin.events.store') }}" method="POST" class="space-y-4">
+
+                @if ($errors->any())
+                    <div class="mb-3 text-red-600">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                <form action="{{ route('admin.events.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-
-                    <div>
-                        <label class="block font-medium text-sm text-gray-700">Nama Event</label>
-                        <input type="text" name="name" required
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    <div class="mb-3">
+                        <label class="block font-medium">Nama Event</label>
+                        <input type="text" name="name" value="{{ old('name') }}" class="border w-full px-2 py-1"
+                            required>
                     </div>
 
-                    <div>
-                        <label class="block font-medium text-sm text-gray-700">Deskripsi</label>
-                        <textarea name="description" rows="4" required
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"></textarea>
+                    <div class="mb-3">
+                        <label class="block font-medium">Deskripsi</label>
+                        <textarea name="description" class="border w-full px-2 py-1" rows="4"
+                            required>{{ old('description') }}</textarea>
                     </div>
 
-                    <div>
-                        <label class="block font-medium text-sm text-gray-700">Tanggal</label>
-                        <input type="date" name="date" required
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    <div class="mb-3">
+                        <label class="block font-medium">Tanggal & Waktu</label>
+                        <input type="datetime-local" name="date" value="{{ old('date') }}"
+                            class="border w-full px-2 py-1" required>
                     </div>
 
-                    <div>
-                        <label class="block font-medium text-sm text-gray-700">Lokasi</label>
-                        <input type="text" name="location" required
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    <div class="mb-3">
+                        <label class="block font-medium">Lokasi</label>
+                        <input type="text" name="location" value="{{ old('location') }}" class="border w-full px-2 py-1"
+                            required>
                     </div>
 
-                    <div class="flex items-center space-x-2">
-                        <button type="submit"
-                            class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none">
+                    <div class="mb-3">
+                        <label class="block font-medium">Poster Event</label>
+                        <input type="file" name="poster" accept="image/*" class="border w-full px-2 py-1">
+                    </div>
+
+                    <div class="flex items-center space-x-3">
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow">
                             Simpan
                         </button>
                         <a href="{{ route('admin.events.index') }}"
-                            class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 focus:outline-none">
+                            class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded shadow">
                             Batal
                         </a>
                     </div>
                 </form>
+
             </div>
         </div>
     </div>
-</x-app-layout>
+</x-admin-layout>

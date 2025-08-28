@@ -1,11 +1,11 @@
-<x-admin-layout title="Manajemen Merch">
+<x-admin-layout title="Manajemen Albums">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white rounded-lg shadow-md p-6">
             <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-semibold text-gray-800">Daftar Merch</h2>
-                <a href="{{ route('admin.merches.create') }}"
+                <h2 class="text-2xl font-semibold text-gray-800">Daftar Album</h2>
+                <a href="{{ route('admin.albums.create') }}"
                    class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md shadow transition-colors">
-                    + Tambah Merch
+                    + Tambah Album
                 </a>
             </div>
 
@@ -20,22 +20,21 @@
                     <thead class="bg-gray-50">
                         <tr>
                             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Gambar</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cover</th>
                             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Judul</th>
                             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Deskripsi</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Link</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal Upload</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal Rilis</th>
                             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                        @forelse($merches as $index => $merch)
+                        @forelse ($albums as $index => $album)
                             <tr class="hover:bg-gray-50 transition-colors">
                                 <td class="px-4 py-4 whitespace-nowrap">{{ $index + 1 }}</td>
                                 <td class="px-4 py-4 whitespace-nowrap">
-                                    @if($merch->image_path)
-                                        <img src="{{ asset('storage/'.$merch->image_path) }}"
-                                             alt="{{ $merch->title }}"
+                                    @if($album->cover_path)
+                                        <img src="{{ asset('storage/' . $album->cover_path) }}" 
+                                             alt="Cover {{ $album->title }}"
                                              class="w-16 h-16 object-cover rounded">
                                     @else
                                         <div class="w-16 h-16 bg-gray-200 rounded flex items-center justify-center">
@@ -43,25 +42,22 @@
                                         </div>
                                     @endif
                                 </td>
-                                <td class="px-4 py-4 font-medium">{{ $merch->title }}</td>
-                                <td class="px-4 py-4">{{ Str::limit($merch->description, 60) }}</td>
-                                <td class="px-4 py-4 text-blue-600 underline">
-                                    <a href="{{ $merch->link }}" target="_blank">{{ Str::limit($merch->link, 30) }}</a>
-                                </td>
+                                <td class="px-4 py-4 whitespace-nowrap font-medium">{{ $album->title }}</td>
+                                <td class="px-4 py-4">{{ Str::limit($album->description, 60) }}</td>
                                 <td class="px-4 py-4 whitespace-nowrap">
-                                    {{ \Carbon\Carbon::parse($merch->created_at)->translatedFormat('d F Y') }}
+                                    {{ \Carbon\Carbon::parse($album->release_date)->translatedFormat('d F Y') }}
                                 </td>
                                 <td class="px-4 py-4 whitespace-nowrap flex space-x-2">
-                                    <a href="{{ route('admin.merches.edit', $merch->id) }}"
+                                    <a href="{{ route('admin.albums.edit', $album->id) }}"
                                        class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded shadow-sm text-sm transition-colors">
                                         Edit
                                     </a>
-                                    <form action="{{ route('admin.merches.destroy', $merch->id) }}" method="POST"
-                                          onsubmit="return confirm('Yakin hapus merch ini?')">
+                                    <form action="{{ route('admin.albums.destroy', $album->id) }}" method="POST"
+                                          onsubmit="return confirm('Yakin hapus album ini?')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"
-                                            class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded shadow-sm text-sm transition-colors">
+                                                class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded shadow-sm text-sm transition-colors">
                                             Hapus
                                         </button>
                                     </form>
@@ -69,8 +65,8 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="px-4 py-4 text-center text-gray-500">
-                                    Belum ada merch
+                                <td colspan="6" class="px-4 py-4 text-center text-gray-500">
+                                    Belum ada album
                                 </td>
                             </tr>
                         @endforelse

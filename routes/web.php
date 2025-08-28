@@ -1,19 +1,25 @@
 <?php
 
+use App\Http\Controllers\AlbumController;
+use App\Http\Controllers\DiscographyController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MerchController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\EventController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/admin', function () {
+    return view('admin.index');
+})->middleware(['auth', 'admin'])->name('admin');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -63,10 +69,45 @@ Route::middleware(['auth', 'admin'])->group(function () {
 Route::get('/merches', [MerchController::class, 'publicIndex'])->name('merches.index');
 Route::get('/merches/{merch}', [MerchController::class, 'show'])->name('merches.show');
 
+// Admin CRUD Discography
+// Admin: Album + Track
+Route::middleware(['auth', 'admin'])->group(function () {
+    // Album
+    Route::get('/admin/albums', [AlbumController::class, 'index'])->name('admin.albums.index');
+    Route::get('/admin/albums/create', [AlbumController::class, 'create'])->name('admin.albums.create');
+    Route::post('/admin/albums', [AlbumController::class, 'store'])->name('admin.albums.store');
+    Route::get('/admin/albums/{album}/edit', [AlbumController::class, 'edit'])->name('admin.albums.edit');
+    Route::put('/admin/albums/{album}', [AlbumController::class, 'update'])->name('admin.albums.update');
+    Route::delete('/admin/albums/{album}', [AlbumController::class, 'destroy'])->name('admin.albums.destroy');
+
+    // Track / Discography
+    Route::get('/admin/discographies', [DiscographyController::class, 'index'])->name('admin.discographies.index');
+    Route::get('/admin/discographies/create', [DiscographyController::class, 'create'])->name('admin.discographies.create');
+    Route::post('/admin/discographies', [DiscographyController::class, 'store'])->name('admin.discographies.store');
+    Route::get('/admin/discographies/{discography}/edit', [DiscographyController::class, 'edit'])->name('admin.discographies.edit');
+    Route::put('/admin/discographies/{discography}', [DiscographyController::class, 'update'])->name('admin.discographies.update');
+    Route::delete('/admin/discographies/{discography}', [DiscographyController::class, 'destroy'])->name('admin.discographies.destroy');
+});
+
+// Public
+Route::get('/albums', [AlbumController::class, 'publicIndex'])->name('albums.index');
+Route::get('/albums/{album}', [AlbumController::class, 'show'])->name('albums.show');
+Route::get('/discographies', [DiscographyController::class, 'publicIndex'])->name('discographies.index');
+Route::get('/discographies/{discography}', [DiscographyController::class, 'show'])->name('discographies.show');
+
+// form publik
+Route::post('/messages', [MessageController::class, 'store'])->name('messages.store');
+
+// admin (butuh login)
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/messages', [MessageController::class, 'index'])->name('admin.messages.index');
+    Route::delete('/admin/messages/{message}', [MessageController::class, 'destroy'])->name('admin.messages.destroy');
+});
 
 // komentar (hanya untuk user login)
 Route::middleware('auth')->group(function () {
     Route::post('/events/{event}/comments', [CommentController::class, 'store'])->name('comments.store');
 });
+
 
 require __DIR__ . '/auth.php';

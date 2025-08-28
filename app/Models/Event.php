@@ -16,6 +16,7 @@ class Event extends Model
         'location',
         'ticket_price',
         'user_id',
+        'poster_path', // ✅ tambahkan ini
     ];
 
     // relasi ke User
@@ -28,4 +29,14 @@ class Event extends Model
     {
         return $this->hasMany(Comment::class);
     }
+
+    public function getPosterUrlAttribute()
+    {
+        return $this->poster_path ? asset('storage/' . $this->poster_path) : null;
+    }
+
+    protected $casts = [
+        'date' => 'datetime',
+    ];
+
 }
