@@ -1,25 +1,38 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+@extends('layouts.main-layout')
+
+@section('content')
+  <div class="bg-secondary min-h-screen py-12">
+    <div class="max-w-3xl mx-auto px-4">
+      <div class="bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+        <!-- Poster -->
+        @if($event->poster_path)
+          <img src="{{ asset('storage/' . $event->poster_path) }}" 
+               alt="{{ $event->name }}" 
+               class="w-full h-80 object-cover">
+        @endif
+
+        <!-- Konten -->
+        <div class="p-6">
+          <h1 class="text-3xl font-bold text-accent mb-4">
             {{ $event->name }}
-        </h2>
-    </x-slot>
+          </h1>
+          <p class="text-gray-300 text-lg mb-6">
+            {{ $event->description }}
+          </p>
+          <p class="text-sm text-gray-400 mb-2">
+            <strong class="text-white">Tanggal:</strong> {{ $event->date }}
+          </p>
+          <p class="text-sm text-gray-400 mb-6">
+            <strong class="text-white">Lokasi:</strong> {{ $event->location }}
+          </p>
 
-    <div class="py-6">
-        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white shadow-sm sm:rounded-lg p-6">
-
-                @if($event->poster_path)
-                    <img src="{{ asset('storage/'.$event->poster_path) }}" alt="Poster" class="w-full rounded mb-4">
-                @endif
-
-                <h3 class="text-xl font-semibold mb-2">{{ $event->name }}</h3>
-                <p class="mb-2">{{ $event->description }}</p>
-                <p><strong>Tanggal:</strong> {{ $event->date }}</p>
-                <p><strong>Lokasi:</strong> {{ $event->location }}</p>
-
-                <a href="{{ route('events.index') }}" class="btn btn-secondary mt-4 inline-block">Kembali ke Daftar Event</a>
-            </div>
+          <!-- Tombol Back -->
+          <a href="{{ route('events.index') }}"
+             class="inline-block bg-primary text-white px-5 py-2 rounded-lg font-medium hover:bg-blue-600 transition duration-300">
+            ← Kembali ke Event
+          </a>
         </div>
+      </div>
     </div>
-</x-app-layout>
+  </div>
+@endsection

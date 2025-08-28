@@ -1,15 +1,42 @@
-<h1>Discography / Tracks</h1>
+@extends('layouts.main-layout')
 
-@foreach($discographies as $track)
-    <div style="border:1px solid #ccc; margin:10px; padding:10px;">
-        <a href="{{ route('discographies.show', $track->id) }}">
-            <img src="{{ asset('storage/'.$track->image_path) }}" width="100">
-        </a>
-        <h3>{{ $track->title }}</h3>
-        <p>{{ $track->description }}</p>
-        <p>Album: {{ $track->album?->title ?? 'No Album' }}</p>
-        <p>Release: {{ $track->release_date }}</p>
+@section('content')
+    <div class="py-6">
+        <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
+            <h1 class="text-2xl font-bold mb-6">Discography / Tracks</h1>
+
+            <div class="space-y-6">
+                @forelse($discographies as $track)
+                    <div class="bg-white shadow-sm rounded-lg p-4 flex gap-4 items-center">
+                        @if($track->image_path)
+                            <a href="{{ route('discographies.show', $track->id) }}">
+                                <img src="{{ asset('storage/' . $track->image_path) }}" 
+                                     alt="{{ $track->title }}" 
+                                     width="120" 
+                                     class="rounded">
+                            </a>
+                        @endif
+
+                        <div>
+                            <h3 class="text-lg font-bold">
+                                <a href="{{ route('discographies.show', $track->id) }}" 
+                                   class="text-indigo-600 hover:underline">
+                                    {{ $track->title }}
+                                </a>
+                            </h3>
+                            <p class="text-gray-600">{{ Str::limit($track->description, 100) }}</p>
+                            <p class="text-sm text-gray-500 mt-1">Album: {{ $track->album?->title ?? 'No Album' }}</p>
+                            <p class="text-sm text-gray-500">Release: {{ $track->release_date }}</p>
+                        </div>
+                    </div>
+                @empty
+                    <p class="text-gray-500">Belum ada track.</p>
+                @endforelse
+
+                <div class="mt-4">
+                    {{ $discographies->links() }}
+                </div>
+            </div>
+        </div>
     </div>
-@endforeach
-
-{{ $discographies->links() }}
+@endsection

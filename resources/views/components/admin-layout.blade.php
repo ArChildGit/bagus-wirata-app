@@ -17,31 +17,37 @@
             <li>
                 <a href="{{ route('admin.events.index') }}"
                     class="px-3 py-2 rounded-md hover:bg-blue-700 transition-colors duration-200">
-                    Dashboard
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('admin.events.index') }}"
-                    class="px-3 py-2 rounded-md hover:bg-blue-700 transition-colors duration-200">
                     Events
                 </a>
             </li>
             <li>
-                <a href="{{ route('admin.events.index') }}"
+                <a href="{{ route('admin.albums.index') }}"
                     class="px-3 py-2 rounded-md hover:bg-blue-700 transition-colors duration-200">
-                    Users
+                    Manage albums
                 </a>
             </li>
             <li>
-                <a href="{{ route('admin.events.index') }}"
+                <a href="{{ route('admin.discographies.index') }}"
                     class="px-3 py-2 rounded-md hover:bg-blue-700 transition-colors duration-200">
-                    Reports
+                    Manage Discography
                 </a>
             </li>
             <li>
-                <a href="{{ route('admin.events.index') }}"
+                <a href="{{ route('admin.galleries.index') }}"
                     class="px-3 py-2 rounded-md hover:bg-blue-700 transition-colors duration-200">
-                    Settings
+                    Galleries
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.merches.index') }}"
+                    class="px-3 py-2 rounded-md hover:bg-blue-700 transition-colors duration-200">
+                    Merches
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.messages.index') }}"
+                    class="px-3 py-2 rounded-md hover:bg-blue-700 transition-colors duration-200">
+                    Massages
                 </a>
             </li>
         </ul>
