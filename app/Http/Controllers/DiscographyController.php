@@ -26,13 +26,13 @@ class DiscographyController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'image' => 'required|image|max:10240', // 10MB
-            'audio' => 'required|mimes:mp3,wav|max:20480', // 20MB
+            'audio' => 'nullable|mimes:mp3,wav|max:20480', // 20MB, audio bisa null
             'release_date' => 'nullable|date',
             'album_id' => 'nullable|exists:albums,id', // ✅ tambahkan ini
         ]);
 
         $image = $request->file('image')->store('discography/images', 'public');
-        $audio = $request->file('audio')->store('discography/audio', 'public');
+        $audio = $request->hasFile('audio') ? $request->file('audio')->store('discography/audio', 'public') : null;
 
         Discography::create([
             'title' => $request->title,
@@ -59,7 +59,7 @@ class DiscographyController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'image' => 'nullable|image|max:10240',
-            'audio' => 'nullable|mimes:mp3,wav|max:20480',
+            'audio' => 'nullable|mimes:mp3,wav|max:20480', // audio bisa null
             'release_date' => 'nullable|date',
             'album_id' => 'nullable|exists:albums,id', // ✅ tambahkan ini
         ]);
@@ -81,7 +81,6 @@ class DiscographyController extends Controller
         return redirect()->route('admin.discographies.index')
             ->with('success', 'Discography berhasil diperbarui!');
     }
-
 
     public function destroy(Discography $discography)
     {

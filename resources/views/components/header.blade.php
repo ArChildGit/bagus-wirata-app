@@ -2,8 +2,9 @@
     <div class="container mx-auto px-6 py-4">
         <div class="flex justify-between items-center">
             <div class="flex items-center">
-                <div class="text-2xl font-bold text-accent">BAGUS <span class="text-primary">WIRATA</span></div>
+                <img src="/logo-soj.webp" alt="Logo" class="h-8 w-auto object-contain" />
             </div>
+
             <nav class="hidden md:flex space-x-10">
                 <a href="#home" class="hover:text-accent transition">Home</a>
                 <a href="#about" class="hover:text-accent transition">Tentang</a>

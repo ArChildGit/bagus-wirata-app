@@ -9,20 +9,20 @@
 
                     {{-- tampilkan alert sukses --}}
                     @if(session('success'))
-                        <div class="bg-green-600 text-white p-3 rounded">
-                            {{ session('success') }}
-                        </div>
+                    <div class="bg-green-600 text-white p-3 rounded">
+                        {{ session('success') }}
+                    </div>
                     @endif
 
                     {{-- tampilkan error --}}
                     @if($errors->any())
-                        <div class="bg-red-600 text-white p-3 rounded">
-                            <ul class="list-disc list-inside">
-                                @foreach($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
+                    <div class="bg-red-600 text-white p-3 rounded">
+                        <ul class="list-disc list-inside">
+                            @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
                     @endif
 
                     <div>
@@ -56,8 +56,11 @@
                             <i class="fas fa-envelope text-lg"></i>
                         </div>
                         <div>
-                            <h4 class="font-bold mb-1">Email</h4>
-                            <p class="text-gray-400">management@echoresonance.com</p>
+                            <h4 class="font-bold mb-1 text-white">Linktree</h4>
+                            <a href="https://linktr.ee/Skyofjustice.id" target="_blank"
+                                class="text-gray-400 hover:text-white transition underline underline-offset-2">
+                                linktr.ee/Skyofjustice.id
+                            </a>
                         </div>
                     </div>
 
@@ -67,7 +70,10 @@
                         </div>
                         <div>
                             <h4 class="font-bold mb-1">Telepon</h4>
-                            <p class="text-gray-400">+62 21 1234 5678</p>
+                            <a href="https://wa.me/6285903713816" target="_blank"
+                                class="text-gray-400 hover:text-white transition">
+                                +62 859-0371-3816
+                            </a>
                         </div>
                     </div>
 
@@ -77,29 +83,39 @@
                         </div>
                         <div>
                             <h4 class="font-bold mb-1">Lokasi</h4>
-                            <p class="text-gray-400">Jakarta Selatan, Indonesia</p>
+                            <p class="text-gray-400">Bali, Indonesia</p>
                         </div>
                     </div>
 
                     <div class="mt-10">
                         <h4 class="font-bold mb-4">Ikuti Kami</h4>
                         <div class="flex space-x-4">
-                            <a href="#"
+
+                            <!-- Instagram -->
+                            <a href="https://www.instagram.com/skyof.justice/" target="_blank"
                                 class="bg-gray-700 hover:bg-primary w-10 h-10 rounded-full flex items-center justify-center transition">
                                 <i class="fab fa-instagram"></i>
                             </a>
-                            <a href="#"
+
+                            <!-- Spotify -->
+                            <a href="https://open.spotify.com/artist/51FRNi53ZE7xdXQxp6ueD1?si=9hmm8JR6R0ys__2gKucVWA&nd=1&dlsi=0005d81b303b4314"
+                                target="_blank"
                                 class="bg-gray-700 hover:bg-primary w-10 h-10 rounded-full flex items-center justify-center transition">
                                 <i class="fab fa-spotify"></i>
                             </a>
-                            <a href="#"
+
+                            <!-- YouTube -->
+                            <a href="https://www.youtube.com/@skyofjustice" target="_blank"
                                 class="bg-gray-700 hover:bg-primary w-10 h-10 rounded-full flex items-center justify-center transition">
                                 <i class="fab fa-youtube"></i>
                             </a>
-                            <a href="#"
+
+                            <!-- TikTok -->
+                            <a href="https://www.tiktok.com/@skyofjustice" target="_blank"
                                 class="bg-gray-700 hover:bg-primary w-10 h-10 rounded-full flex items-center justify-center transition">
-                                <i class="fab fa-twitter"></i>
+                                <i class="fab fa-tiktok"></i>
                             </a>
+
                         </div>
                     </div>
                 </div>
